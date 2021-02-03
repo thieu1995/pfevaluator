@@ -1,0 +1,2 @@
+include README.md LICENSE
+include pfevaluator/support_data/*.csv
