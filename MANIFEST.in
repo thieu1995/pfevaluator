@@ -1,3 +1,2 @@
 include README.md LICENSE
-include pfevaluator/support_data/*.csv
-include examples/*.csv
+graft pfevaluator/support_data/
