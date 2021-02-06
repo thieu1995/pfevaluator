@@ -7,53 +7,61 @@
 #       Github:     https://github.com/thieu1995                                                        %
 # ------------------------------------------------------------------------------------------------------%
 
-from numpy import all, any, ndarray, array, isfinite, isnan, zeros
+from numpy import all, any, ndarray, array, isfinite, isnan, zeros, where
+from numpy import max as np_max
 
 
 class Root:
     """
         This class is Abstract class for all other class to inherit
-        (Performance Metrics Ensemble for Multiobjective Evolutionary Algorithms)
     """
 
-    def __init__(self, pareto_fronts=None, reference_fronts=None):
+    def __init__(self, pareto_front=None, reference_front=None):
         """
-        :param pareto_fronts: list/tuple or 2d-array (matrix) of non-dominated fronts (pareto fronts obtained from your test case)
-        :param reference_fronts: list/tuple or 2d-array (matrix) of True pareto-fronts or your appropriate fronts you wish to be reference fronts
+        :param pareto_front: list/tuple or 2d-array (matrix) of non-dominated front (pareto front obtained from your test case)
+        :param reference_front: list/tuple or 2d-array (matrix) of True pareto-front or your appropriate front you wish to be reference front
         """
         self.messages = []
         self.flag = True
         self.n_objs = 0
-        # When creating object, you can pass pareto fronts with different size, or even None. It wont effect the program
-        # But when you calling the function, if you pass None or fronts with different size --> this flag will be triggered
+        # When creating object, you can pass pareto front with different size, or even None. It wont effect the program
+        # But when you calling the function, if you pass None or front with different size --> this flag will be triggered
 
-        self.pareto_fronts = self.check_convert_fronts(pareto_fronts)
-        self.reference_fronts = self.check_convert_fronts(reference_fronts)
+        self.pareto_front = self.check_convert_front(pareto_front)
+        self.reference_front = self.check_convert_front(reference_front)
 
-    def check_convert_fronts(self, fronts=None, converted_type="float64"):
-        if fronts is None:
+    def check_convert_front(self, front=None, converted_type="float64"):
+        if front is None:
             return None
         else:
-            if type(fronts) in [list, tuple]:
-                fronts_temp = array(fronts)
-                if type(fronts_temp[0]) is not ndarray:
-                    self.messages.append("Some points in your fronts have different size. Please check again")
+            if type(front) in [list, tuple]:
+                front_temp = array(front)
+                if type(front_temp[0]) is not ndarray:
+                    self.messages.append("Some points in your front have different size. Please check again")
                     self.flag = False
                     return None
                 else:
-                    fronts_temp = fronts_temp.astype(converted_type)
-                    check_none = isnan(fronts_temp).any()
-                    check_infinite = isfinite(fronts_temp).all()
+                    front_temp = front_temp.astype(converted_type)
+                    check_none = isnan(front_temp).any()
+                    check_infinite = isfinite(front_temp).all()
                     if check_none or not check_infinite:
-                        self.messages.append("Some points in your fronts contain None/Infinite value. Please check again")
+                        self.messages.append("Some points in your front contain None/Infinite value. Please check again")
                         self.flag = False
                         return None
                     else:
-                        return fronts_temp
+                        return front_temp
+            if type(front) is ndarray:
+                return front
 
     def print_messages(self):
         for msg in self.messages:
             print(msg)
+
+    def check_hypervolume_point(self, hv_point=None):
+        if hv_point is None:
+            self.messages.append("Need Hypervolume point to calculate Volume. Please set its values")
+            self.print_messages()
+            exit(0)
 
     def dominates(self, fit_a, fit_b):
         return all(fit_a <= fit_b) and any(fit_a < fit_b)
@@ -75,54 +83,63 @@ class Root:
                     list_dominated[i] = 1
         return list_dominated
 
-    def get_pareto_fronts_reference_fronts(self, pareto_fronts=None, reference_fronts=None, metric=None):
-        reference_fronts = self.check_convert_fronts(reference_fronts)
-        pareto_fronts = self.check_convert_fronts(pareto_fronts)
-        if self.reference_fronts is None:
-            if reference_fronts is None:
-                self.messages.append(f'To calculate {metric} you need Reference fronts')
+    def get_pareto_front_reference_front(self, pareto_front=None, reference_front=None, metric=None):
+        reference_front = self.check_convert_front(reference_front)
+        pareto_front = self.check_convert_front(pareto_front)
+        if self.reference_front is None:
+            if reference_front is None:
+                self.messages.append(f'To calculate {metric} you need Reference front')
                 self.print_messages()
                 exit(0)
             else:
-                if self.pareto_fronts is None:
-                    if pareto_fronts is None:
-                        self.messages.append(f'To calculate {metric} you need Pareto fronts obtained from yor test case')
+                if self.pareto_front is None:
+                    if pareto_front is None:
+                        self.messages.append(f'To calculate {metric} you need Pareto front obtained from yor test case')
                         self.print_messages()
                         exit(0)
                     else:
-                        return pareto_fronts, reference_fronts
+                        return pareto_front, reference_front
                 else:
-                    if pareto_fronts is None:
-                        return self.pareto_fronts, reference_fronts
+                    if pareto_front is None:
+                        return self.pareto_front, reference_front
                     else:
-                        return pareto_fronts, reference_fronts
+                        return pareto_front, reference_front
         else:
-            if reference_fronts is None:
-                if self.pareto_fronts is None:
-                    if pareto_fronts is None:
-                        self.messages.append(f'To calculate {metric} you need Pareto fronts obtained from yor test case')
+            if reference_front is None:
+                if self.pareto_front is None:
+                    if pareto_front is None:
+                        self.messages.append(f'To calculate {metric} you need Pareto front obtained from yor test case')
                         self.print_messages()
                         exit(0)
                     else:
-                        return pareto_fronts, self.reference_fronts
+                        return pareto_front, self.reference_front
                 else:
-                    if pareto_fronts is None:
-                        return self.pareto_fronts, self.reference_fronts
+                    if pareto_front is None:
+                        return self.pareto_front, self.reference_front
                     else:
-                        return pareto_fronts, self.reference_fronts
+                        return pareto_front, self.reference_front
             else:
-                if self.pareto_fronts is None:
-                    if pareto_fronts is None:
-                        self.messages.append(f'To calculate {metric} you need Pareto fronts obtained from yor test case')
+                if self.pareto_front is None:
+                    if pareto_front is None:
+                        self.messages.append(f'To calculate {metric} you need Pareto front obtained from yor test case')
                         self.print_messages()
                         exit(0)
                     else:
-                        return pareto_fronts, reference_fronts
+                        return pareto_front, reference_front
                 else:
-                    if pareto_fronts is None:
-                        return self.pareto_fronts, reference_fronts
+                    if pareto_front is None:
+                        return self.pareto_front, reference_front
                     else:
-                        return pareto_fronts, reference_fronts
+                        return pareto_front, reference_front
+
+    def find_reference_front(self, solutions=None):     # List of non-dominated solutions
+        list_solutions = self.check_convert_front(solutions)
+        list_dominated = self.find_dominates_list(list_solutions)
+        return list_solutions[where(list_dominated == 0)]
+
+    def find_reference_point(self, solutions=None):     # The maximum single point in all dimensions
+        list_solutions = self.check_convert_front(solutions)
+        return np_max(list_solutions, axis=0)
 
     def get_metrics_by_name(self, *func_names):
         temp = []
