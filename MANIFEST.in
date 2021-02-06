@@ -1,2 +1,3 @@
 include README.md LICENSE
 graft pfevaluator/support_data/
+global-include *.csv
