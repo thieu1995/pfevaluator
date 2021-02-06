@@ -10,13 +10,14 @@
 from pfevaluator.root import Root
 from pygmo.core import hypervolume
 
+
 class Metrics(Root):
     """
         This class is for: Metrics Measuring the Closeness of the Solutions to the True Pareto Front
         (Performance Metrics Ensemble for Multiobjective Evolutionary Algorithms)
     """
 
-    def __init__(self, pareto_fronts, reference_fronts):
+    def __init__(self, pareto_fronts=None, reference_fronts=None):
         super().__init__(pareto_fronts, reference_fronts)
         self.hv_point = None
 
