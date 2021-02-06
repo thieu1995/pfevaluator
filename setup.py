@@ -7,14 +7,14 @@ def readme():
 
 setup(
     name="pfevaluator",
-    version="1.0.0",
+    version="1.1.0",
     author="Thieu",
     author_email="nguyenthieu2102@gmail.com",
     description="pfevaluator: A library for evaluating performance metrics of Pareto fronts in multiple/many objective optimization problems",
     long_description=readme(),
     long_description_content_type="text/markdown",
     url="https://github.com/thieu1995/pfevaluator",
-    download_url="https://github.com/thieu1995/pfevaluator/archive/v1.0.0.zip",
+    download_url="https://github.com/thieu1995/pfevaluator/archive/v1.1.0.zip",
     packages=find_packages(),
     include_package_data=True,
     license="MIT",
@@ -37,6 +37,9 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Utilities",
     ],
-    install_requires=["numpy"],
+    install_requires=[
+        'numpy>=1.18.1',
+        'pygmo>=2.13.0'
+    ],
     python_requires='>=3.6',
 )
