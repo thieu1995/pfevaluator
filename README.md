@@ -1,9 +1,19 @@
 # pfevaluator: A library for evaluating performance metrics of Pareto fronts in multiple/many objective optimization problems
 
-[![GitHub release](https://img.shields.io/badge/release-1.1.0-yellow.svg)]()
-[![](https://img.shields.io/badge/python-3.7+-orange.svg)](https://www.python.org/downloads/release/python-370/)
+
+[![GitHub release](https://img.shields.io/badge/release-1.4.3-yellow.svg)](https://github.com/thieu1995/pfpfevaluator/releases)
 [![Wheel](https://img.shields.io/pypi/wheel/gensim.svg)](https://pypi.python.org/pypi/pfevaluator) 
-[![PyPI version](https://badge.fury.io/py/permetrics.svg)](https://badge.fury.io/py/pfevaluator)
+[![PyPI version](https://badge.fury.io/py/pfevaluator.svg)](https://badge.fury.io/py/pfevaluator)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pfevaluator.svg)
+![PyPI - Status](https://img.shields.io/pypi/status/pfevaluator.svg)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/pfevaluator.svg)
+[![Downloads](https://static.pepy.tech/badge/pfevaluator)](https://pepy.tech/project/pfevaluator)
+![GitHub Release Date](https://img.shields.io/github/release-date/thieu1995/pfevaluator.svg)
+[![Documentation Status](https://readthedocs.org/projects/pfevaluator/badge/?version=latest)](https://pfevaluator.readthedocs.io/en/latest/?badge=latest)
+[![Chat](https://img.shields.io/badge/Chat-on%20Telegram-blue)](https://t.me/+fRVCJGuGJg1mNDg1)
+![GitHub contributors](https://img.shields.io/github/contributors/thieu1995/pfevaluator.svg)
+[![GitTutorial](https://img.shields.io/badge/PR-Welcome-%23FF8300.svg?)](https://git-scm.com/book/en/v2/GitHub-Contributing-to-a-Project)
+[![DOI](https://zenodo.org/badge/280617738.svg)](https://zenodo.org/badge/latestdoi/280617738)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
